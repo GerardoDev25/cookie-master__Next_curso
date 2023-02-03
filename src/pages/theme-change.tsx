@@ -49,7 +49,7 @@ const ThemeChangePage: NextPage<Props> = ({ theme }) => {
           <FormControl>
             <FormLabel>Theme</FormLabel>
             <RadioGroup value={currenttheme} onChange={onThemeChange}>
-              <FormControlLabel value={'ligth'} control={<Radio />} label='ligth' />
+              <FormControlLabel value={'light'} control={<Radio />} label='light' />
               <FormControlLabel value={'dark'} control={<Radio />} label='Dark' />
               <FormControlLabel value={'custom'} control={<Radio />} label='Custom' />
             </RadioGroup>
@@ -64,7 +64,7 @@ const ThemeChangePage: NextPage<Props> = ({ theme }) => {
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { theme = 'light', name = 'no name' } = req.cookies;
 
-  const validThemes = ['ligth', 'dark', 'custom'];
+  const validThemes = ['light', 'dark', 'custom'];
 
   return {
     props: {
