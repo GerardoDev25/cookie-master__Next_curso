@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import {
   Card,
@@ -10,14 +10,24 @@ import {
   RadioGroup,
 } from '@mui/material';
 
+import cookies from 'js-cookie';
+
 import { Layout } from 'components/layout';
 
 const ThemeChangePage: NextPage = () => {
   const [currenttheme, setCurrenttheme] = useState('ligth');
 
   const onThemeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCurrenttheme(e.target.value);
+    const { value } = e.target;
+    console.log({ value });
+    setCurrenttheme(value);
+    localStorage.setItem('theme', value);
+    cookies.set('theme', value);
   };
+
+  useEffect(() => {
+    console.log(localStorage.getItem('theme'));
+  }, []);
 
   return (
     <Layout>
