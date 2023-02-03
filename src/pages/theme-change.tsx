@@ -16,8 +16,12 @@ import cookies from 'js-cookie';
 import { Layout } from 'components/layout';
 import axios from 'axios';
 
-const ThemeChangePage: NextPage = (props) => {
-  const [currenttheme, setCurrenttheme] = useState('ligth');
+interface Props {
+  theme: string;
+}
+
+const ThemeChangePage: NextPage<Props> = ({ theme }) => {
+  const [currenttheme, setCurrenttheme] = useState(theme);
 
   useEffect(() => {
     console.log(localStorage.getItem('theme'));
@@ -58,9 +62,11 @@ const ThemeChangePage: NextPage = (props) => {
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { theme = 'light', name = 'no name' } = req.cookies;
 
+  const validThemes = ['ligth', 'dark', 'custom'];
+
   return {
     props: {
-      theme,
+      theme: validThemes.includes(theme) ? theme : 'dark',
       name,
     },
   };
