@@ -24,7 +24,8 @@ const ThemeChangePage: NextPage<Props> = ({ theme }) => {
   const [currenttheme, setCurrenttheme] = useState(theme);
 
   useEffect(() => {
-    console.log(localStorage.getItem('theme'));
+    // console.log('LocalStorage:', localStorage.getItem('theme'));
+    // console.log('Cookies:', cookies.get('theme'));
   }, []);
 
   const onThemeChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +33,7 @@ const ThemeChangePage: NextPage<Props> = ({ theme }) => {
     setCurrenttheme(value);
     localStorage.setItem('theme', value);
     cookies.set('theme', value);
+    console.log('Cookies:', cookies.get('theme'));
   };
 
   const handleClick = async () => {

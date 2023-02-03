@@ -1,14 +1,20 @@
-import { ThemeProvider, CssBaseline } from '@mui/material';
+import { ThemeProvider, CssBaseline, Theme } from '@mui/material';
 import type { AppContext, AppProps } from 'next/app';
 
-import { darkTheme } from '@/themes';
+import { customTheme, darkTheme, lightTheme } from '@/themes';
 
 import '@/styles/globals.css';
 
-function App({ Component, pageProps, ...rest }: AppProps) {
-  console.log(rest);
+interface Props extends AppProps {
+  theme: string;
+}
+
+function App({ Component, pageProps, theme }: Props) {
+  const currentTheme: Theme =
+    theme === 'light' ? lightTheme : theme === 'dark' ? darkTheme : customTheme;
+
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={currentTheme}>
       <CssBaseline />
       <Component {...pageProps} />
     </ThemeProvider>
