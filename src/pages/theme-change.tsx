@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { NextPage, GetServerSideProps } from 'next';
 import {
+  Button,
   Card,
   CardContent,
   FormControl,
@@ -13,11 +14,14 @@ import {
 import cookies from 'js-cookie';
 
 import { Layout } from 'components/layout';
+import axios from 'axios';
 
 const ThemeChangePage: NextPage = (props) => {
   const [currenttheme, setCurrenttheme] = useState('ligth');
 
-  console.log(props);
+  useEffect(() => {
+    console.log(localStorage.getItem('theme'));
+  }, []);
 
   const onThemeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -26,9 +30,11 @@ const ThemeChangePage: NextPage = (props) => {
     cookies.set('theme', value);
   };
 
-  useEffect(() => {
-    console.log(localStorage.getItem('theme'));
-  }, []);
+  const handleClick = async () => {
+    const { data } = await axios.get('/api/hello');
+
+    console.log(data);
+  };
 
   return (
     <Layout>
@@ -42,6 +48,7 @@ const ThemeChangePage: NextPage = (props) => {
               <FormControlLabel value={'custom'} control={<Radio />} label='Custom' />
             </RadioGroup>
           </FormControl>
+          <Button onClick={handleClick}>Request</Button>
         </CardContent>
       </Card>
     </Layout>
@@ -50,8 +57,6 @@ const ThemeChangePage: NextPage = (props) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { theme = 'light', name = 'no name' } = req.cookies;
-
-  console.log(cookies);
 
   return {
     props: {
